@@ -99,3 +99,7 @@ export function getNumberParam(key: string) {
 	if (!isFinite(value)) return undefined
 	else return value
 }
+
+export function signedRoot(num: number) {
+	return Math.sqrt(Math.abs(num)) * Math.sign(num)
+}
