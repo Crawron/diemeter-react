@@ -111,7 +111,7 @@ function App() {
 						/>
 						<DeltaMeter delta={deltaProbs[face]} middle={averageProbs[face]} />
 						{formatPercentage(deltaProbs[face])} (
-						{formatPercentage(resultingProbs[face] ?? 0)}
+						{formatPercentage(resultingProbs[face] ?? 0, false)}
 						{" / "}
 						{formatPercentage(averageProbs[face] ?? 0, false)})
 					</label>
