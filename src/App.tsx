@@ -109,7 +109,12 @@ function App() {
 								})
 							}
 						/>
-						<DeltaMeter delta={deltaProbs[face]} middle={averageProbs[face]} />
+						<DeltaMeter
+							delta={deltaProbs[face]}
+							negBound={-averageProbs[face]}
+							posBound={1 - averageProbs[face]}
+							middle={Math.min(1 / (maxFace - minFace), 0.5)}
+						/>
 						{formatPercentage(deltaProbs[face])} (
 						{formatPercentage(resultingProbs[face] ?? 0, false)}
 						{" / "}
