@@ -1,5 +1,5 @@
 import React from "react"
-import { signedRoot } from "./helpers"
+import { getDeltaColor, signedRoot } from "./helpers"
 
 export default function DeltaMeter({
 	delta,
@@ -16,14 +16,17 @@ export default function DeltaMeter({
 	const posScale = signedRoot(delta / posBound)
 
 	return (
-		<div className="flex flex-row gap-0.5 h-8 w-full max-w-xs rounded overflow-hidden ">
+		<div className="flex flex-row flex-1 gap-0.5 h-8 w-full rounded overflow-hidden">
 			<div
 				className="bg-blueGray-600 h-full overflow-hidden"
 				style={{ width: `${middle * 100}%` }}
 			>
 				<div
-					className="bg-red-500 h-full w-full transform origin-right transition"
-					style={{ transform: `scaleX(${negScale})` }}
+					className="h-full w-full transform origin-right transition"
+					style={{
+						backgroundColor: getDeltaColor(delta, negBound / 3),
+						transform: `scaleX(${negScale})`,
+					}}
 				/>
 			</div>
 			<div
@@ -31,8 +34,11 @@ export default function DeltaMeter({
 				style={{ width: `${(1 - middle) * 100}%` }}
 			>
 				<div
-					className="bg-green-500 h-full w-full transform origin-left transition"
-					style={{ transform: `scaleX(${posScale})` }}
+					className="h-full w-full transform origin-left transition"
+					style={{
+						backgroundColor: getDeltaColor(delta, posBound / 12),
+						transform: `scaleX(${posScale})`,
+					}}
 				/>
 			</div>
 		</div>

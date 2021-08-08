@@ -103,3 +103,26 @@ export function getNumberParam(key: string) {
 export function signedRoot(num: number) {
 	return Math.sqrt(Math.abs(num)) * Math.sign(num)
 }
+
+export function cap(num: number, min: number, max: number) {
+	return Math.min(Math.max(num, min), max)
+}
+
+export function getDeltaColor(delta: number, bound = 0.15) {
+	const white = "#EEEEEE"
+	const redColors = ["#F8D3CF", "#FFB7B0", "#FF9B94", "#FF7D77", "#FF595A"]
+	const greenColors = ["#D8EAC7", "#C0E5A0", "#A6E178", "#89DB4D", "#66D500"]
+
+	const palette = delta > 0 ? greenColors : redColors
+	if (delta === 0) return white
+
+	return palette[
+		Math.floor(
+			cap(
+				Math.abs(delta / bound) * palette.length,
+				0,
+				palette.length - 0.00000001
+			)
+		)
+	]
+}
