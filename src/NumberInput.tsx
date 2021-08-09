@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react"
+import Icon from "./Icon"
 
 export default function NumberInput(props: {
 	value: string | number
@@ -50,14 +51,28 @@ export default function NumberInput(props: {
 	}
 
 	return (
-		<input
-			className="h-8 w-8 bg-blueGray-900 text-center tabular-nums rounded overflow-hidden font-medium"
-			ref={inputRef}
-			type="text"
-			value={value}
-			min={props.min}
-			max={props.max}
-			onChange={handleChange}
-		/>
+		<div className="flex  rounded overflow-hidden gap-px">
+			<input
+				className="h-8 w-8  bg-blueGray-900 text-center tabular-nums font-medium"
+				ref={inputRef}
+				type="text"
+				value={value}
+				min={props.min}
+				max={props.max}
+				onChange={handleChange}
+			/>
+			<div
+				className="grid place-items-center w-6 bg-blueGray-600 hover:bg-blueGray-700 active:bg-blueGray-800 transition-colors select-none"
+				onClick={() => bump(-1)}
+			>
+				<Icon name="minus" />
+			</div>
+			<div
+				className="grid place-items-center w-6 bg-blueGray-600 hover:bg-blueGray-700 active:bg-blueGray-800 transition-colors select-none"
+				onClick={() => bump(1)}
+			>
+				<Icon name="plus" />
+			</div>
+		</div>
 	)
 }
