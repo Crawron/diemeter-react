@@ -1,35 +1,32 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useRef, useEffect } from "react"
 
 export default function NumberInput(props: {
 	value: string | number
 	min?: number
 	max?: number
-	onChange?: (newValue: number) => void
+	onChange?: (newValue: string) => void
 }) {
 	const { min, max } = props
-	const [value, setValue] = useState(props.value.toString())
-	const [parsedValue, setParsedValue] = useState(parseInt(value))
+	const value = String(props.value)
 	const inputRef = useRef<HTMLInputElement>(null)
 
-	useEffect(() => {
-		if (props.onChange) props.onChange(parsedValue)
-		setValue(parsedValue.toString())
-	}, [parsedValue])
-
-	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (ev) => {
-		let newValue = parseInt(ev.target.value)
-		setValue(ev.target.value)
-		if (isFinite(newValue)) setParsedValue(newValue)
+	function maybeClamp(value: number) {
+		if (min !== undefined && value < min) return min
+		if (max !== undefined && value > max) return max
+		return value
 	}
 
 	function bump(amount: number) {
-		let newValue = parsedValue + amount
+		let newValue = parseInt(value) + amount
 
-		if (min !== undefined && newValue < min) newValue = min
-		if (max !== undefined && newValue > max) newValue = max
-		if (!isFinite(newValue)) newValue = parsedValue
+		if (!isFinite(newValue))
+			if (amount < 0 && max) newValue = max
+			else if (amount > 0 && min) newValue = min
+			else newValue = 0
 
-		setParsedValue(newValue)
+		newValue = maybeClamp(newValue)
+
+		if (props.onChange) props.onChange(newValue.toString())
 	}
 
 	// Handle Wheel event non-passively
@@ -46,6 +43,11 @@ export default function NumberInput(props: {
 			inputRef.current && inputRef.current.removeEventListener("wheel", handler)
 		}
 	})
+
+	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (ev) => {
+		if (ev.target.value === "") ev.target.value = maybeClamp(0).toString()
+		if (props.onChange) props.onChange(ev.target.value)
+	}
 
 	return (
 		<input

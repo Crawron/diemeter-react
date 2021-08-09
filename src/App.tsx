@@ -62,24 +62,33 @@ function App() {
 							value={diceCount}
 							min={1}
 							max={5}
-							onChange={(val) => setDiceCount(val)}
+							onChange={(val) => {
+								const dice = parseInt(val)
+								if (isFinite(dice)) setDiceCount(dice)
+							}}
 						/>
 					</label>
 					<label>
 						Min Dice Value
 						<NumberInput
 							min={0}
-							max={maxFace}
+							max={maxFace - 1}
 							value={minFace}
-							onChange={(val) => setMinFace(val)}
+							onChange={(val) => {
+								const min = parseInt(val)
+								if (isFinite(min)) setMinFace(min)
+							}}
 						/>
 					</label>
 					<label>
 						Max Dice Value
 						<NumberInput
-							min={minFace}
+							min={minFace + 1}
 							value={maxFace}
-							onChange={(val) => setMaxFace(val)}
+							onChange={(val) => {
+								const max = parseInt(val)
+								if (isFinite(max)) setMaxFace(max)
+							}}
 						/>
 					</label>
 				</div>
@@ -87,16 +96,18 @@ function App() {
 
 				{range(minRoll, maxRoll).map((face) => (
 					<div className="flex flex-row gap-2" key={face}>
-						<div className="w-8 h-8">{face}</div>
+						<RollLabel label={face.toString()} />
 						<NumberInput
 							value={rollCounts[face] ?? 0}
 							min={0}
-							onChange={(val) =>
-								setRollCounts({
-									...rollCounts,
-									[face]: val,
-								})
-							}
+							onChange={(val) => {
+								const roll = parseInt(val)
+								if (isFinite(roll))
+									setRollCounts({
+										...rollCounts,
+										[face]: roll,
+									})
+							}}
 						/>
 						<DeltaMeter
 							delta={deltaProbs[face]}
@@ -122,6 +133,14 @@ function Percentage({ value }: { value: number }) {
 			<span className="inline-block w-20 text-right">
 				{formatPercentage(value, false)}
 			</span>
+		</div>
+	)
+}
+
+function RollLabel({ label }: { label: string }) {
+	return (
+		<div className="grid place-items-center w-8 h-8 rounded bg-blueGray-300 text-blueGray-700 font-bold select-none">
+			{label}
 		</div>
 	)
 }
