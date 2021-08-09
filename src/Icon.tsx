@@ -1,6 +1,54 @@
 import React from "react"
 
 export default function Icon({ name }: { name: string }) {
+	if (name === "arrow-right")
+		return (
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				className="h-5 w-5"
+				viewBox="0 0 20 20"
+				fill="currentColor"
+			>
+				<path
+					fillRule="evenodd"
+					d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+					clipRule="evenodd"
+				/>
+			</svg>
+		)
+
+	if (name === "plus")
+		return (
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				className="h-5 w-5"
+				viewBox="0 0 20 20"
+				fill="currentColor"
+			>
+				<path
+					fillRule="evenodd"
+					d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+					clipRule="evenodd"
+				/>
+			</svg>
+		)
+
+	if (name === "minus")
+		return (
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				className="h-5 w-5"
+				viewBox="0 0 20 20"
+				fill="currentColor"
+			>
+				<path
+					fillRule="evenodd"
+					d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
+					clipRule="evenodd"
+				/>
+			</svg>
+		)
+
 	if (name === "backspace")
 		return (
 			<svg
@@ -11,7 +59,7 @@ export default function Icon({ name }: { name: string }) {
 			>
 				<path
 					fillRule="evenodd"
-					d="M6.707 4.879A3 3 0 018.828 4H15a3 3 0 013 3v6a3 3 0 01-3 3H8.828a3 3 0 01-2.12-.879l-4.415-4.414a1 1 0 010-1.414l4.414-4.414zm4 2.414a1 1 0 00-1.414 1.414L10.586 10l-1.293 1.293a1 1 0 101.414 1.414L12 11.414l1.293 1.293a1 1 0 001.414-1.414L13.414 10l1.293-1.293a1 1 0 00-1.414-1.414L12 8.586l-1.293-1.293z"
+					d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
 					clipRule="evenodd"
 				/>
 			</svg>
