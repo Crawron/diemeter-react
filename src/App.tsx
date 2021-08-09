@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import history from "history/browser"
+import { Action } from "history"
 
 import {
 	calcAverages,
@@ -16,6 +17,7 @@ import {
 import DeltaMeter from "./DeltaMeter"
 import Button from "./Button"
 import NumberInput from "./NumberInput"
+import Icon from "./Icon"
 
 function App() {
 	const [diceCount, setDiceCount] = useState(getNumberParam("count") ?? 2)
@@ -42,6 +44,11 @@ function App() {
 		history.replace(url)
 	})
 
+	history.listen(() => {
+		if (history.action === Action.Pop)
+			window.location.href = window.location.href
+	})
+
 	const minRoll = diceCount * minFace
 	const maxRoll = diceCount * maxFace
 
@@ -54,10 +61,13 @@ function App() {
 
 	return (
 		<div className="App">
-			<div className="w-full max-w-2xl mx-auto">
-				<div className="flex flex-col">
-					<label>
-						Dice Count
+			<div className="w-full min-w-max px-4 py-20 max-w-2xl mx-auto ">
+				<div className="flex flex-col gap-2 mb-8">
+					<div className="flex flex-row gap-2">
+						<div className="grid place-items-center w-8 h-8">
+							<Icon name="dice" />
+						</div>
+
 						<NumberInput
 							value={diceCount}
 							min={1}
@@ -67,9 +77,12 @@ function App() {
 								if (isFinite(dice)) setDiceCount(dice)
 							}}
 						/>
-					</label>
-					<label>
-						Min Dice Value
+					</div>
+					<div className="flex flex-row gap-2">
+						<div className="grid place-items-center w-8 h-8">
+							<Icon name="dice" />
+						</div>
+
 						<NumberInput
 							min={0}
 							max={maxFace - 1}
@@ -79,9 +92,9 @@ function App() {
 								if (isFinite(min)) setMinFace(min)
 							}}
 						/>
-					</label>
-					<label>
-						Max Dice Value
+						<div className="grid place-items-center w-8 h-8">
+							<Icon name="arrow-right" />
+						</div>
 						<NumberInput
 							min={minFace + 1}
 							value={maxFace}
@@ -90,34 +103,45 @@ function App() {
 								if (isFinite(max)) setMaxFace(max)
 							}}
 						/>
-					</label>
-				</div>
-				<Button icon="backspace" onClick={() => setRollCounts({})} />
-
-				{range(minRoll, maxRoll).map((face) => (
-					<div className="flex flex-row gap-2" key={face}>
-						<RollLabel label={face.toString()} />
-						<NumberInput
-							value={rollCounts[face] ?? 0}
-							min={0}
-							onChange={(val) => {
-								const roll = parseInt(val)
-								if (isFinite(roll))
-									setRollCounts({
-										...rollCounts,
-										[face]: roll,
-									})
+					</div>
+					<div>
+						<Button
+							icon="backspace"
+							text="Clear Rolls"
+							onClick={() => {
+								history.push(window.location.toString())
+								setRollCounts({})
 							}}
 						/>
-						<DeltaMeter
-							delta={deltaProbs[face]}
-							negBound={-averageProbs[face]}
-							posBound={1 - averageProbs[face]}
-							middle={Math.min(1 / (maxFace - minFace), 0.5)}
-						/>{" "}
-						<Percentage value={deltaProbs[face]} />
 					</div>
-				))}
+				</div>
+
+				<div className="flex flex-col gap-2">
+					{range(minRoll, maxRoll).map((face) => (
+						<div className="flex flex-row gap-2" key={face}>
+							<RollLabel label={face.toString()} />
+							<NumberInput
+								value={rollCounts[face] ?? 0}
+								min={0}
+								onChange={(val) => {
+									const roll = parseInt(val)
+									if (isFinite(roll))
+										setRollCounts({
+											...rollCounts,
+											[face]: roll,
+										})
+								}}
+							/>
+							<DeltaMeter
+								delta={deltaProbs[face]}
+								negBound={-averageProbs[face]}
+								posBound={1 - averageProbs[face]}
+								middle={Math.min(1 / (maxFace - minFace), 0.5)}
+							/>{" "}
+							<Percentage value={deltaProbs[face]} />
+						</div>
+					))}
+				</div>
 			</div>
 		</div>
 	)
@@ -126,13 +150,11 @@ function App() {
 function Percentage({ value }: { value: number }) {
 	return (
 		<div
-			className="w-24 h-8 flex flex-row font-bold tabular-nums"
+			className="h-8 place-items-center flex flex-row font-bold tabular-nums"
 			style={{ color: getDeltaColor(value) }}
 		>
-			<span className="inline-block w-2 text-center">{getSign(value)}</span>
-			<span className="inline-block w-20 text-right">
-				{formatPercentage(value, false)}
-			</span>
+			<span className="w-2 text-center">{getSign(value)}</span>
+			<span className="w-20 text-right">{formatPercentage(value, false)}</span>
 		</div>
 	)
 }
