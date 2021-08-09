@@ -12,8 +12,8 @@ export default function DeltaMeter({
 	posBound?: number
 	middle?: number
 }) {
-	const negScale = signedRoot(delta / negBound)
-	const posScale = signedRoot(delta / posBound)
+	const negScale = delta > 0 ? 0 : signedRoot(delta / negBound)
+	const posScale = delta < 0 ? 0 : signedRoot(delta / posBound)
 
 	return (
 		<div className="flex flex-row flex-1 gap-0.5 h-8 w-full rounded overflow-hidden">
