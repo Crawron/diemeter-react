@@ -161,7 +161,7 @@ function Percentage({ value }: { value: number }) {
 
 function RollLabel({ label }: { label: string }) {
 	return (
-		<div className="grid place-items-center w-8 h-8 rounded bg-blueGray-300 text-blueGray-700 font-bold select-none">
+		<div className="grid place-items-center w-8 h-8 rounded bg-slate-300 text-slate-700 font-bold select-none">
 			{label}
 		</div>
 	)

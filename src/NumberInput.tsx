@@ -53,7 +53,7 @@ export default function NumberInput(props: {
 	return (
 		<div className="flex  rounded overflow-hidden gap-px">
 			<input
-				className="h-8 w-8  bg-blueGray-900 text-center tabular-nums font-medium"
+				className="h-8 w-8  bg-slate-900 text-center tabular-nums font-medium"
 				ref={inputRef}
 				type="text"
 				value={value}
@@ -62,13 +62,13 @@ export default function NumberInput(props: {
 				onChange={handleChange}
 			/>
 			<div
-				className="grid place-items-center w-6 bg-blueGray-600 hover:bg-blueGray-700 active:bg-blueGray-800 transition-colors select-none"
+				className="grid place-items-center w-6 bg-slate-600 hover:bg-slate-700 active:bg-slate-800 transition-colors select-none"
 				onClick={() => bump(-1)}
 			>
 				<Icon name="minus" />
 			</div>
 			<div
-				className="grid place-items-center w-6 bg-blueGray-600 hover:bg-blueGray-700 active:bg-blueGray-800 transition-colors select-none"
+				className="grid place-items-center w-6 bg-slate-600 hover:bg-slate-700 active:bg-slate-800 transition-colors select-none"
 				onClick={() => bump(1)}
 			>
 				<Icon name="plus" />

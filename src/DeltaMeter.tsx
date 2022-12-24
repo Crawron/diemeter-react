@@ -18,7 +18,7 @@ export default function DeltaMeter({
 	return (
 		<div className="flex flex-row flex-1 gap-0.5 h-8 w-full rounded overflow-hidden">
 			<div
-				className="bg-blueGray-600 h-full overflow-hidden"
+				className="bg-slate-600 h-full overflow-hidden"
 				style={{ width: `${middle * 100}%` }}
 			>
 				<div
@@ -30,7 +30,7 @@ export default function DeltaMeter({
 				/>
 			</div>
 			<div
-				className="bg-blueGray-600 h-full overflow-hidden"
+				className="bg-slate-600 h-full overflow-hidden"
 				style={{ width: `${(1 - middle) * 100}%` }}
 			>
 				<div

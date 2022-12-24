@@ -10,7 +10,7 @@ export default function Button(props: {
 
 	return (
 		<button
-			className={`h-8 ${xSizing} grid grid-flow-col gap-1 place-items-center rounded transition-colors bg-blueGray-600 hover:bg-blueGray-500 active:bg-blueGray-700 cursor-pointer font-medium`}
+			className={`h-8 ${xSizing} grid grid-flow-col gap-1 place-items-center rounded transition-colors bg-slate-600 hover:bg-slate-500 active:bg-slate-700 cursor-pointer font-medium`}
 			onClick={props.onClick}
 		>
 			{props.icon && <Icon name={props.icon} />}
