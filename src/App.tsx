@@ -59,6 +59,10 @@ function App() {
 	)
 	const deltaProbs = calcDeltaProbs(resultingProbs, averageProbs)
 
+	const rollTotal = Object.values(
+		filterRolls(rollCounts, minRoll, maxRoll)
+	).reduce((a, b) => a + b, 0)
+
 	return (
 		<div className="App">
 			<div className="w-full max-w-2xl px-4 py-20 mx-auto min-w-max ">
@@ -141,6 +145,7 @@ function App() {
 							<Percentage value={deltaProbs[face]} />
 						</div>
 					))}
+					<p className="italic text-opacity-75">{rollTotal} rolls</p>
 				</div>
 			</div>
 		</div>
