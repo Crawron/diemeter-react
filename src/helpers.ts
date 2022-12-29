@@ -38,19 +38,10 @@ export function calcAverages(
 	return rollCounts
 }
 
-export function formatPercentage(num: number, includeSign = true) {
-	num *= 100
-	const sign = lit(includeSign, getSign(num))
-	return `${sign}${Math.abs(num).toFixed(2)}%`
-}
+export const formatPercent = (num: number) =>
+	Math.abs(num * 100).toFixed(2) + "%"
 
-export function getSign(num: number) {
-	return num > 0 ? "+" : num < 0 ? "-" : "±"
-}
-
-export function lit(condition: boolean, str: string) {
-	return condition ? str : ""
-}
+export const formatSign = (num: number) => (num > 0 ? "+" : num < 0 ? "-" : "±")
 
 export function calcResultingProbs(rolls: Record<number, number>) {
 	const sum = Object.entries(rolls)

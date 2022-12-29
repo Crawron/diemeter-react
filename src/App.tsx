@@ -7,11 +7,11 @@ import {
 	calcDeltaProbs,
 	calcResultingProbs,
 	filterRolls,
-	formatPercentage,
+	formatPercent,
 	getDeltaColor,
 	getNumberParam,
 	getRollsFromQuery,
-	getSign,
+	formatSign,
 	range,
 } from "./helpers"
 import DeltaMeter from "./DeltaMeter"
@@ -61,10 +61,10 @@ function App() {
 
 	return (
 		<div className="App">
-			<div className="w-full min-w-max px-4 py-20 max-w-2xl mx-auto ">
+			<div className="w-full max-w-2xl px-4 py-20 mx-auto min-w-max ">
 				<div className="flex flex-col gap-2 mb-8">
 					<div className="flex flex-row gap-2">
-						<div className="grid place-items-center w-8 h-8">
+						<div className="grid w-8 h-8 place-items-center">
 							<Icon name="dice" />
 						</div>
 
@@ -79,7 +79,7 @@ function App() {
 						/>
 					</div>
 					<div className="flex flex-row gap-2">
-						<div className="grid place-items-center w-8 h-8">
+						<div className="grid w-8 h-8 place-items-center">
 							<Icon name="dice" />
 						</div>
 
@@ -92,7 +92,7 @@ function App() {
 								if (isFinite(min)) setMinFace(min)
 							}}
 						/>
-						<div className="grid place-items-center w-8 h-8">
+						<div className="grid w-8 h-8 place-items-center">
 							<Icon name="arrow-right" />
 						</div>
 						<NumberInput
@@ -150,18 +150,18 @@ function App() {
 function Percentage({ value }: { value: number }) {
 	return (
 		<div
-			className="h-8 place-items-center flex flex-row font-bold tabular-nums"
+			className="flex flex-row h-8 font-bold place-items-center tabular-nums"
 			style={{ color: getDeltaColor(value) }}
 		>
-			<span className="w-2 text-center">{getSign(value)}</span>
-			<span className="w-20 text-right">{formatPercentage(value, false)}</span>
+			<span className="w-2 text-center">{formatSign(value)}</span>
+			<span className="w-20 text-right">{formatPercent(value)}</span>
 		</div>
 	)
 }
 
 function RollLabel({ label }: { label: string }) {
 	return (
-		<div className="grid place-items-center w-8 h-8 rounded bg-slate-300 text-slate-700 font-bold select-none">
+		<div className="grid w-8 h-8 font-bold rounded select-none place-items-center bg-slate-300 text-slate-700">
 			{label}
 		</div>
 	)
