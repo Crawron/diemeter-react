@@ -137,7 +137,7 @@ function App() {
 								negBound={-averageProbs[face]}
 								posBound={1 - averageProbs[face]}
 								middle={Math.min(1 / (maxFace - minFace), 0.5)}
-							/>{" "}
+							/>
 							<Percentage value={deltaProbs[face]} />
 						</div>
 					))}
