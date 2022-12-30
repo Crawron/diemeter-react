@@ -117,3 +117,25 @@ export function getDeltaColor(delta: number, bound = 0.15) {
 		)
 	]
 }
+
+export const sum = (a: number, b: number) => a + b
+
+export function calcAbsurdity(i: number, totalRolls: number) {
+	return (
+		Math.pow(1 / 6, i) * Math.pow(5 / 6, totalRolls - i) * choose(totalRolls, i)
+	)
+}
+
+export function choose(n: number, k: number) {
+	if (k > n) return 0
+	if (k * 2 > n) k = n - k
+	if (k === 0) return 1
+
+	let result = n
+	for (const i of range(2, k)) {
+		result *= n - i + 1
+		result /= i
+	}
+
+	return result
+}

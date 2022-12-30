@@ -13,6 +13,7 @@ import {
 	getRollsFromQuery,
 	formatSign,
 	range,
+	calcAbsurdity,
 } from "./helpers"
 import DeltaMeter from "./DeltaMeter"
 import Button from "./Button"
@@ -63,9 +64,16 @@ function App() {
 		filterRolls(rollCounts, minRoll, maxRoll)
 	).reduce((a, b) => a + b, 0)
 
+	function increaseRoll(face: number, amount = 1) {
+		setRollCounts({
+			...rollCounts,
+			[face]: (rollCounts[face] ?? 0) + 1,
+		})
+	}
+
 	return (
 		<div className="App">
-			<div className="w-full max-w-2xl px-4 py-20 mx-auto min-w-max ">
+			<div className="w-full max-w-3xl px-4 py-20 mx-auto min-w-max">
 				<div className="flex flex-col gap-2 mb-8">
 					<div className="flex flex-row gap-2">
 						<div className="grid w-8 h-8 place-items-center">
@@ -143,9 +151,38 @@ function App() {
 								middle={Math.min(1 / (maxFace - minFace), 0.5)}
 							/>
 							<Percentage value={deltaProbs[face]} />
+							<span className="w-16 font-semibold text-right text-green-500">
+								{(
+									range(0, rollTotal)
+										.map((i) => calcAbsurdity(i, rollTotal))
+										.slice(0, rollCounts[face] + 1)
+										.reduce((a, b) => a + b, 0) * 100
+								).toFixed(2)}
+								%
+							</span>
+							<span className="w-16 font-semibold text-right text-red-500">
+								{(
+									range(1, rollTotal)
+										.map((i) => calcAbsurdity(i, rollTotal))
+										.slice(rollCounts[face] + 1)
+										.reduce((a, b) => a + b, 0) * 100
+								).toFixed(2)}
+								%
+							</span>
 						</div>
 					))}
 					<p className="italic text-opacity-75">{rollTotal} rolls</p>
+					<input
+						className="bg-slate-800"
+						type="text"
+						onKeyDown={(ev) => {
+							const face = Number(ev.key)
+							if (!Number.isFinite(face)) return
+							if (face > maxRoll || face < minRoll) return
+
+							increaseRoll(face)
+						}}
+					/>
 				</div>
 			</div>
 		</div>
