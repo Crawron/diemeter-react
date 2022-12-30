@@ -1,6 +1,9 @@
 {
 	"name": "diemeter-react",
 	"version": "0.0.0",
+	"engines": {
+		"node": ">=16.9.0"
+	},
 	"scripts": {
 		"dev": "vite --host ",
 		"build": "tsc && vite build",
